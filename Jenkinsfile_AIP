@@ -130,9 +130,10 @@ spec:
 								sh '''
 								USERNAME=${USERNAME_FEATURE_DEPLOY}
 						                HOSTS=${HOST_FEATURE_DEPLOY}
-								'''
+								echo $HOSTS
+								
 								for (HOSTNAME in ${HOSTS}) {
-								       sh '''
+								      
 									DEPOYMENT_SERVER=$HOSTNAME
 									DEPLOYMENT_USER=$USERNAME
 									echo "I am deploying the artifact into the target environment $HOSTNAME"

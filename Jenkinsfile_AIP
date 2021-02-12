@@ -27,23 +27,15 @@ spec:
 		
 		
 		
-		stage('Post Deploy Tests') {
-		parallel {
-		stage('Smoke Test') {
-when { branch 'dev'}
-
-		steps {
-		container('gradle') {
-		script {
-		withMaven(maven: 'MAVEN-3.6.3') {
-			echo "I am executing Smoke Test on target dev environment post deployment"
-						}
-		   }
-	}
-}
-}
-}
+		stage('Smoke Test'){
+		when { branch 'dev'}
+			steps {
 				
+				echo "I am executing Smoke Test on target dev environment post deployment"
+				echo 'Work in progress'
+				
+			}
+	}		
 				
 	
   	}

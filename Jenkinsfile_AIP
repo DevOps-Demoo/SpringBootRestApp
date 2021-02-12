@@ -52,7 +52,7 @@ spec:
 			parallel {
 				stage('Smoke Test') {
 				when {
-				expression { {(env.GIT_BRANCH == 'dev')} || {(env.GIT_BRANCH == 'release')} }
+				expression { {(env.BRANCH_NAME == 'dev')} || {(env.BRANCH_NAME == 'release')} }
 				}
 					steps {
 					

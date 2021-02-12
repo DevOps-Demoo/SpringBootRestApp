@@ -1,4 +1,4 @@
-//def propfile
+def propfile
 
 pipeline {
 	agent {
@@ -25,8 +25,10 @@ spec:
 	stages {
 	stage ('Test Test') {
 	steps {
+	script {
 	propfile = readProperties(file: './project.properties')
 					echo "I am executing Smoke Test on target dev environment post deployment"
+				}
 				}
 				}
 		

@@ -132,14 +132,14 @@ spec:
 										
 									}
 
-								 
-								/* else {
+								 }
+								 else {
 									echo "Deployment not required"
-								} */
+								} 
 							}
 						}
 					}
-				}
+				
 		
 		
 		

@@ -127,9 +127,9 @@ spec:
 								withMaven(maven: 'MAVEN-3.6.3') {
 								HOSTNAME=''
 								sh '''
-								$USERNAME=${USERNAME_FEATURE_DEPLOY}
-						                $HOSTS=${HOST_FEATURE_DEPLOY}
-								'''
+								USERNAME=${USERNAME_FEATURE_DEPLOY}
+						                HOSTS=${HOST_FEATURE_DEPLOY}
+								
 								for (HOSTNAME in ${HOSTS}) {
 									$DEPOYMENT_SERVER=$HOSTNAME
 									$DEPLOYMENT_USER=$USERNAME
@@ -155,6 +155,7 @@ spec:
 									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "sleep 20"' 
 									*/
 									echo 'tomcat server started'
+									'''
 								}
 							}
 						} 

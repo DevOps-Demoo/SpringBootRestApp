@@ -51,9 +51,9 @@ spec:
 		stage('Post Deploy Tests') {
 			parallel {
 				stage('Smoke Test') {
-				when {
-				expression { {(env.BRANCH_NAME == 'dev')} || {(env.BRANCH_NAME == 'release')} }
-				}
+				when { branch 'dev' ||  branch 'release' }
+				
+				
 					steps {
 					
 								container('gradle') {

@@ -126,8 +126,8 @@ spec:
 							script {
 								withMaven(maven: 'MAVEN-3.6.3') {
 								HOSTNAME=''
-								USERNAME=${USERNAME_FEATURE_DEPLOY}
-						                HOSTS=${HOST_FEATURE_DEPLOY}
+								$USERNAME=${USERNAME_FEATURE_DEPLOY}
+						                $HOSTS=${HOST_FEATURE_DEPLOY}
 								
 								for (HOSTNAME in ${HOSTS}) {
 									$DEPOYMENT_SERVER=$HOSTNAME

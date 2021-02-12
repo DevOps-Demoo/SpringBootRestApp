@@ -36,7 +36,13 @@ spec:
 				echo 'Work in progress'
 				
 			}
-	}		
+	}
+	stage ('Test') {
+	steps {
+					echo "I am executing Smoke Test on target dev environment post deployment"
+				}
+				}
+	
 				
 	
   	}

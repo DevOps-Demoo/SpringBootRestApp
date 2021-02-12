@@ -125,14 +125,14 @@ spec:
 						container('gradle') {
 							script {
 								withMaven(maven: 'MAVEN-3.6.3') {
-								HOSTNAME=''
-								USERNAME=${USERNAME_FEATURE_DEPLOY}
-								HOSTS=${HOST_FEATURE_DEPLOY}
+								//HOSTNAME=''
+								//USERNAME=${USERNAME_FEATURE_DEPLOY}
+								//HOSTS=${HOST_FEATURE_DEPLOY}
 
 										
 									}
 
-								//} 
+								 
 								else {
 									echo "Deployment not required"
 								}

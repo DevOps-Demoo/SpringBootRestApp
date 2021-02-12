@@ -28,7 +28,7 @@ spec:
 		
 		
 		stage('Smoke Test'){
-		when { $BRANCH_NAME 'EJB_RS'}
+		when { env.GIT_BRANCH 'EJB_RS'}
 		
 			steps {
 				

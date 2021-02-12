@@ -71,25 +71,25 @@ spec:
 				}
 			}
 		}
-		stage('Code Quality') {
+		/* stage('Code Quality') {
 			steps {
 				container('gradle') {
 					withMaven(maven: 'MAVEN-3.6.3') {
 						withSonarQubeEnv(installationName: 'Sonarqube') {
 							echo 'I am executing code quality using sonarqube'
 							echo "Change the line below when we switch to the actual EJB repo"
-							// sh 'gradle SonarQube'
+							 sh 'gradle SonarQube'
 							echo 'Remove the line below when we switch to the actual EJB repo'
 							sh 'mvn -f sample-java-app/pom.xml -Dsonar.projectName=EJB_${BRANCH_NAME} -Dsonar.projectKey=EJB_sample sonar:sonar'
 						}
-						/*sleep(60)
+						sleep(60)
 						timeout(time: 1, unit: 'MINUTES') {
 						waitForQualityGate abortPipeline: true
-						}*/ 
+						} 
 					}
 				}
 			}
-		}
+		} */
 		stage("Publish Package") {
 			steps {
 				container('gradle') {
@@ -118,115 +118,10 @@ spec:
 				}
 			}
 		
-		stage("Deploy") {
-			steps {
-				container('gradle') {
-					script {
-						when {
-   							expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-  
-						     }
-							
-									USERNAME=${USERNAME_FEATURE_DEPLOY}
-									HOSTS=${HOST_FEATURE_DEPLOY}
-								
-								for (HOSTNAME in ${HOSTS}) {
-									$DEPOYMENT_SERVER=$HOSTNAME
-									$DEPLOYMENT_USER=$USERNAME
-									echo "I am deploying the artifact into the target environment $HOSTNAME"
-									echo "Username = $USERNAME"
-									echo 'Replace all the lines below for EJB and add the parameters to propfile and make refrences below'
-									echo 'Accom logic for multiple env and mult servers in each env based on the branch name'
-									echo 'shutting down the tomcat ESB server'
-									/* sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "$ESB_BIN_PATH stop || sleep 20"'
-									echo 'force stop any remaining mule process'
-									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "if [[ $(ps aux | grep /opt/mule/latest/ | grep -vc grep)  > 0 ]]; then "kill -9 $(ps -ef|pgrep -f "/opt/mule/latest/bin")"; else echo "do nothing"; fi"' 
-									*/
-									echo 'tomcat server stopped'
-									echo 'copying the tar file from jenkins to deployment directory on app and remove the old folders and untarring the new jar and war files'
-									/* sh 'scp -rp $WORKSPACE/artifacts/artifact.tar $DEPLOYMENT_USER@$DEPOYMENT_SERVER:$DEPLOYMENT_STAGE_DIR/'
-									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "cd $DEPLOYMENT_STAGE_DIR && rm -rf *.war *.jar"'
-									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "cd $DEPLOYMENT_STAGE_DIR && tar -xvzf artifact.tar && rm -rf *.jar"'
-									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "cd $DEPLOYMENT_DIR && rm -rf $ESB_WAR_FOLDERS && cp -rp $DEPLOYMENT_STAGE_DIR/*.war $DEPLOYMENT_DIR"' 
-									*/
-									echo 'Deployment has been completed'
-									echo 'starting the tomcat ESB server'
-									/* sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "$ESB_BIN_PATH start"'
-									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "sleep 20"' 
-									*/
-									echo 'tomcat server started'
-								}
-							
-						} else {
-							echo "Deployment not required"
-						}
-					}
-				}
-			}
-		}
-		stage('Post Deploy Tests') {
-			parallel {
-				stage('Smoke Test') {
-					steps {
-						container('gradle') {
-							script {
-								when {
-    									expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-  
-								     }
-									withMaven(maven: 'MAVEN-3.6.3') {
-										echo "I am executing Smoke Test on target dev environment post deployment"
-									}
-								}
-							}
-						}
-					}
-				
-				stage('Security Test') {
-					steps {
-						container('gradle') {
-							script {
-								when {
-   									expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-  
-								     }
-									withMaven(maven: 'MAVEN-3.6.3') {
-										echo 'I am running Security Test here'
-									}
-								}
-							}
-						}
-					}
-				
-			}
-		}    
+		
+		
+		
+		
 	
-	post {
-  		always {
-			script {
-				when {
-    					expression { propfile['javadoc'] == "true" }
-  
-				     }
-					javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
-        			}
-		  	}
-		}
-	  	
-    		failure {
-			/*mail bcc: '', 
-			 body: "<b>Example</b><br>\n<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", 
-			 cc: '', 
-			 charset: 'UTF-8', 
-			 from: '', 
-			 mimeType: 'text/html', 
-			 replyTo: '', 
-			 subject: "ERROR CI: Project name -> ${env.JOB_NAME}", 
-			 to: "foo@foomail.com";*/
-			echo 'I am sending a notification with failure'
-    		}
-	  	success {
-		  	echo 'I am sending a notification with success'
-	  	}
   	}
 }

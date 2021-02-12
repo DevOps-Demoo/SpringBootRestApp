@@ -37,11 +37,12 @@ spec:
 		WORKSOFT_URI='http://pwwsftapp01/executionmanager/api'
 		USERNAME='devopsengineering@signetjewelers.com'
 		USERNAME_FEATURE_DEPLOY='muleadmin'
-		HOSTS_FEATURE_DEPLOY="10.6.74.90"
+		HOSTS_FEATURE_DEPLOY='ABC'
 		USERNAME_DEV_DEPLOY='muleadmin'
 		HOSTS_DEV_DEPLOY='10.6.74.91'
 		USERNAME_RELEASE='muleadmin'
 		HOSTS_RELEASE_DEPLOY="'10.6.74.92' '10.6.74.93'"
+		
 	}
 	stages {
 		stage('Build & Unit Test') {

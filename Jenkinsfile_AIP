@@ -162,11 +162,9 @@ spec:
 				
 post {
   		always {
-			 when {
-    			 expression { propfile['javadoc'] == "true" }
-			   } 
-		        steps {
+			
 			script {
+			if (propfile['javadoc'] == "true") {
 			        
 				javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
         			} 

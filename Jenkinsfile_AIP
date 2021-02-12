@@ -28,7 +28,7 @@ spec:
 		
 		
 		stage('Smoke Test'){
-		when { branch 'EJB_RS/release'}
+		when { branch 'EJB_RS'}
 		
 			steps {
 				

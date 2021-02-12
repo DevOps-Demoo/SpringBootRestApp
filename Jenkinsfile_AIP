@@ -44,52 +44,7 @@ spec:
 		HOSTS_RELEASE_DEPLOY="'10.6.74.92' '10.6.74.93'"
 	}
 	stages {
-		stage('Build & Unit Test') {
-			steps {
-				container('gradle') {
-					script {
-						withMaven(maven: 'MAVEN-3.6.3') {
-							echo 'I am executing build and unit test'
-							echo 'use the command below when we switch to EJB source'
-							//sh 'gradle --no-daemon clean build'
-							echo 'Add gradle clean and build for EJB and comment this step' 
-							sh 'mvn -f sample-java-app/pom.xml clean package'
-							propfile = readProperties(file: './project.properties')
-							if (propfile['javadoc'] == "true") {
-								sh 'mvn javadoc:aggregate'
-							}
-							if (propfile['jacoco'] == "true") {
-								jacoco( 
-									execPattern: '**/*.exec',
-									classPattern: '**/*.class',
-									sourcePattern: '**/*.java',
-									exclusionPattern: '**/test*'
-								)
-							}
-						}	
-					}
-				}
-			}
-		}
-		/* stage('Code Quality') {
-			steps {
-				container('gradle') {
-					withMaven(maven: 'MAVEN-3.6.3') {
-						withSonarQubeEnv(installationName: 'Sonarqube') {
-							echo 'I am executing code quality using sonarqube'
-							echo "Change the line below when we switch to the actual EJB repo"
-						 sh 'gradle SonarQube'
-							echo 'Remove the line below when we switch to the actual EJB repo'
-							sh 'mvn -f sample-java-app/pom.xml -Dsonar.projectName=EJB_${BRANCH_NAME} -Dsonar.projectKey=EJB_sample sonar:sonar'
-						}
-						sleep(60)
-						timeout(time: 1, unit: 'MINUTES') {
-						waitForQualityGate abortPipeline: true
-						} 
-					}
-				}
-			}
-		} */
+		
 		stage("Publish Package") {
 			steps {
 				container('gradle') {
@@ -115,7 +70,7 @@ spec:
 					}
 				}
 			}
-		//}
+		
 		
 		stage('Post Deploy Tests') {
 			parallel {
@@ -131,23 +86,8 @@ spec:
 							}
 						}
 					}
-				//}
-				stage('Security Test') {
-					steps {
-						container('gradle') {
-							script {
-								when { expression {(env.GIT_BRANCH == /dev/)} || {(env.GIT_BRANCH == /release/)} || propfile['feature_deploy'] == "true"}
-									withMaven(maven: 'MAVEN-3.6.3') {
-										echo 'I am running Security Test here'
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}    
-	// }
+				
+				
 	
   	}
 }

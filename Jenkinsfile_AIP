@@ -27,8 +27,12 @@ spec:
 		
 		
 		
-		stage('Smoke Test'){
-		when { env.GIT_BRANCH 'EJB_RS'}
+		
+		
+		stage('Example Deploy') {
+            when {
+                branch 'EJB_RS'
+            }
 		
 			steps {
 				

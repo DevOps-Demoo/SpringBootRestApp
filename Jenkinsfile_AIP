@@ -131,11 +131,11 @@ spec:
 								USERNAME=${USERNAME_FEATURE_DEPLOY}
 						                HOSTS=${HOST_FEATURE_DEPLOY}
 								echo $HOSTS
-								
+								'''
 								for (HOSTNAME in ${HOSTS}) {
 								      
-									DEPOYMENT_SERVER=$HOSTNAME
-									DEPLOYMENT_USER=$USERNAME
+									sh 'DEPOYMENT_SERVER=$HOSTNAME'
+									sh 'DEPLOYMENT_USER=$USERNAME'
 									echo "I am deploying the artifact into the target environment $HOSTNAME"
 									echo "Username = $USERNAME"
 									echo 'Replace all the lines below for EJB and add the parameters to propfile and make refrences below'
@@ -158,7 +158,7 @@ spec:
 									sh 'ssh $DEPLOYMENT_USER@$DEPOYMENT_SERVER "sleep 20"' 
 									*/
 									echo 'tomcat server started'
-								'''
+								
 								}
 							}
 						} 

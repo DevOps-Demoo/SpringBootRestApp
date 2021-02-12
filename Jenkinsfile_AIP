@@ -161,17 +161,16 @@ spec:
 				
 post {
   		always {
-		      when {
+			 when {
     			 expression { propfile['javadoc'] == "true" }
 			   }
 		       steps {
 			script {
-			   javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
+				javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
         			}
-		  	     }
-			}
-	}
-	failure {
+		  	}
+	  	}
+    		failure {
 			/*mail bcc: '', 
 			 body: "<b>Example</b><br>\n<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", 
 			 cc: '', 
@@ -186,6 +185,7 @@ post {
 	  	success {
 		  	echo 'I am sending a notification with success'
 	  	}
+}
 		
 		
 		

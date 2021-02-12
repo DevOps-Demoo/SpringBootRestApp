@@ -91,14 +91,14 @@ spec:
 			}
 		} */
 		stage("Publish Package") {
+			when {
+    				expression {env.GIT_BRANCH == 'origin/EJB_RSingh' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
+  
+			     }
 			steps {
 				container('gradle') {
-					script {
-						when {
-    							expression {env.GIT_BRANCH == 'origin/EJB_RSingh' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-  
-						     }
-							withMaven(maven: 'MAVEN-3.6.3') {
+					       script {
+						     withMaven(maven: 'MAVEN-3.6.3') {
 								echo 'I am pushing the artifact with unique name showing the branch from which it is generated, to Archiva'
 								echo 'Replace the next 4 lines to reflect the EJB artifact and push it to archiva'
 								echo 'Use the 5 lines below when we switch to the actual EJB repo' 

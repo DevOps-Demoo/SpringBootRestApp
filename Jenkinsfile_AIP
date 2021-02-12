@@ -165,9 +165,9 @@ post {
     			 expression { propfile['javadoc'] == "true" }
 			   }
 		       steps {
-			script {
+			/* script {
 				javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
-        			}
+        			} */
 		  	}
 	  	}
     		failure {
@@ -186,7 +186,7 @@ post {
 		  	echo 'I am sending a notification with success'
 	  	}
 }
-}
+
 		
 		
 		

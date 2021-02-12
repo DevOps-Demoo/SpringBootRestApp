@@ -1,4 +1,4 @@
-def propfile
+//def propfile
 
 pipeline {
 	agent {

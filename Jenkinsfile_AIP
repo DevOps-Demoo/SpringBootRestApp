@@ -128,7 +128,7 @@ spec:
 								//HOSTNAME=''
 								//USERNAME=${USERNAME_FEATURE_DEPLOY}
 								//HOSTS=${HOST_FEATURE_DEPLOY}
-
+								echo "hi"
 										
 									}
 

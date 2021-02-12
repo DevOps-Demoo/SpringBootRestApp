@@ -161,13 +161,14 @@ spec:
 				
 post {
   		always {
-			 when {
+			 /* when {
     			 expression { propfile['javadoc'] == "true" }
-			   }
-		       steps {
-			/* script {
+			   } */
+		       
+			script {
+			        if (propfile['javadoc'] == "true") {
 				javadoc(javadocDir: "/home/jenkins/agent/workspace/${env.JOB_NAME}/target/site/apidocs", keepAll: true)
-        			} */
+        			} 
 		  	}
 	  	}
     		failure {

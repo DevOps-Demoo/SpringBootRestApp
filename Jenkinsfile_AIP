@@ -126,7 +126,7 @@ spec:
 						container('gradle') {
 							script {
 								withMaven(maven: 'MAVEN-3.6.3') {
-								HOSTNAME=''
+								//HOSTNAME=''
 								sh '''
 								USERNAME=${USERNAME_FEATURE_DEPLOY}
 						                HOSTS=${HOST_FEATURE_DEPLOY}

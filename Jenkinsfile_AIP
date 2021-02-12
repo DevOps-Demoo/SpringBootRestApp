@@ -95,7 +95,7 @@ spec:
 				container('gradle') {
 					script {
 						when {
-    							expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
+    							expression {env.GIT_BRANCH == 'origin/EJB_RSingh' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
   
 						     }
 							withMaven(maven: 'MAVEN-3.6.3') {

@@ -141,11 +141,10 @@ spec:
 
 
 		     stage('Security Test') {
+		     				when {
+   						     expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
+  						     }
 					steps {
-						when {
-   							expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-  
-						      }
 						container('gradle') {
 							script {
 								

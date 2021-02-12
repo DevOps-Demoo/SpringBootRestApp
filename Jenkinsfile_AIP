@@ -28,7 +28,7 @@ spec:
 		
 		
 		stage('Smoke Test'){
-		when { branch 'dev'}
+		when { branch 'dev' || branch 'release'}
 			steps {
 				
 				echo "I am executing Smoke Test on target dev environment post deployment"

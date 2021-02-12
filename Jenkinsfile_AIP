@@ -39,7 +39,7 @@ spec:
 		
 		stage('Example Deploy') {
            when {
-    expression {env.GIT_BRANCH == 'origin/EJB_RS' || env.GIT_BRANCH == 'origin/release' }
+    expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
   
 		}
 			steps {

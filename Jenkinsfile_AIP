@@ -30,15 +30,16 @@ spec:
 		
 		
 		stage('Example Deploy') {
-            when {
-                branch 'EJB_RS'
-            }
+           when {
+    expression {env.GIT_BRANCH == 'origin/EJB_RS'}
+  
 		
 			steps {
 				
 				echo "I am executing Smoke Test on target dev environment post deployment"
 				echo 'Work in progress'
 				
+			}
 			}
 	}
 	stage ('Test') {

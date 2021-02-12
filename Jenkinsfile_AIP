@@ -118,30 +118,47 @@ spec:
 					}
 				}
 			}
-		stage("Deploy") {
-                               when {
-                                      expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
-                                    }
-                                      steps {
-                                             container('gradle') {
-                                                    script {
-                                                           withMaven(maven: 'MAVEN-3.6.3') {
-                                                           //HOSTNAME=''
-                                                           sh '''
-                                                           USERNAME=${USERNAME_FEATURE_DEPLOY}
-                                                           HOSTS=${HOST_FEATURE_DEPLOY}
-                                                           echo $HOSTS
-                                                                                                                         
-                                                            '''   
-                                                            }
-                                                    } 
+		stage('Post Deploy Tests') {
+			parallel {
+				stage('Smoke Test') {
+					      when {
+    							expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
+  
+						    }
+					steps {
+						container('gradle') {
+							script {
+								
+								withMaven(maven: 'MAVEN-3.6.3') {
+								echo "I am executing Smoke Test on target dev environment post deployment"
+								}
+							    }
+							}
+						}
+					}
 
- 
 
-                                                }
-                                            }
-               }
-                         
+
+
+		     stage('Security Test') {
+					steps {
+						when {
+   							expression {env.GIT_BRANCH == 'origin/dev' || env.GIT_BRANCH == 'origin/release'|| propfile['feature_deploy'] == "true" }
+  
+						      }
+						container('gradle') {
+							script {
+								
+								withMaven(maven: 'MAVEN-3.6.3') {
+								echo 'I am running Security Test here'
+							       }
+							   }
+							}
+						}
+					}
+				
+			}
+       }
 				
 		
 		
